@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.genesys.api.model.ServiceException;
 import com.genesys.api.model.User;
 import com.genesys.api.model.UserModel;
+import com.genesys.api.model.UserNotFoundException;
 import com.genesys.api.service.UserService;
 
 
@@ -77,6 +78,12 @@ public class UserLoginController {
          service.deleteUser(id);
     }
     
+    @ExceptionHandler(UserNotFoundException.class)
+    public String handleUserNotFoundException(UserNotFoundException e) {
+    	throw e;
+    }
+  
+    
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleException(Exception e) {
@@ -84,5 +91,7 @@ public class UserLoginController {
     	e.printStackTrace();
     	return "Service Error";
     }
+    
+  
     
 }
