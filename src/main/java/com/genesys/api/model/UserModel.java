@@ -27,7 +27,7 @@ public class UserModel {
 		@Pattern(regexp="((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})")	
 	    private String password;
 	   
-		Date lastLogin;
+		private Date lastLogin;
 
 	
 		public String getName() {

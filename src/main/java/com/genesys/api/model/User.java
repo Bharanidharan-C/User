@@ -31,7 +31,7 @@ public class User {
 	    private String password;
 	   
 	    @Column(name = "LAST_LOGIN")
-	    Date lastLogin;
+	    private Date lastLogin;
 
 	    public User() {
 	        super();
