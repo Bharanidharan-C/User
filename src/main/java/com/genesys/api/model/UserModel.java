@@ -30,6 +30,7 @@ public class UserModel {
 		private Date lastLogin;
 
 	
+	
 		public String getName() {
 			return name;
 		}
