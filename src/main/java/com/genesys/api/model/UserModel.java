@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
 
 public class UserModel {
 
-
+		 
 	    private String name;
 		
 		@NotNull
@@ -65,5 +65,6 @@ public class UserModel {
 		public User translateModelToUser() {
 			return new User(this.name,this.email,this.password,this.lastLogin);
 		}
+		
 	 
 }

@@ -44,6 +44,8 @@ public class UserLoginApplicationTests {
 	@Autowired
 	WebApplicationContext context;
 	private MockMvc mockMVC;
+	
+    private static Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 	 
 	@Test
 	public void contextLoads() {
@@ -56,6 +58,8 @@ public class UserLoginApplicationTests {
 	
 	@Test
 	public void test_2_RetrieveAllUser() throws Exception {
+		
+		logger.info("TEST RETRIVING ALL USERS");
 		mockMVC.perform(get("/user")).andDo(print())
 		.andExpect(status().isOk());
 	
@@ -65,6 +69,7 @@ public class UserLoginApplicationTests {
 	@Test
 	public void test_1_GetUser() throws Exception{
 		
+		logger.info("TEST RETRIVING USER 1 DETAILS");
 		mockMVC.perform(get("/user/1")).andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
@@ -75,7 +80,7 @@ public class UserLoginApplicationTests {
 	
 	@Test
 	public void test_3_addUser() throws Exception{
-		
+		logger.info("TEST ADD USER");
 		UserModel user = new UserModel();
 		user.setEmail("b@b.com");
 		user.setName("B");
@@ -92,6 +97,7 @@ public class UserLoginApplicationTests {
 	
 	@Test
 	public void test_4_UpdateUser() throws Exception{
+		logger.info("TEST UPDATING USER");
 		UserModel user = new UserModel();
 		user.setEmail("c@c.com");
 		user.setName("C");
@@ -100,23 +106,49 @@ public class UserLoginApplicationTests {
 		String requestJSON = toJson(user);
 		MvcResult result = mockMVC.perform(post("/user").content(requestJSON).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isCreated()).andReturn();
-		
+		System.out.print(result.getResponse().getContentAsString());
 		User addedUser = toUser(result.getResponse().getContentAsString());	
-		
+	
 		user.setName("CC");
+		user.setEmail("x@x.com");
+		
 		
 		String updatedRequestJSON = toJson(user);
 		
-		mockMVC.perform(put("/user/"+addedUser.getId()).content(updatedRequestJSON).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("CC"));;
+		mockMVC.perform(put("/user/"+addedUser.getId()).content(updatedRequestJSON).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())			
+			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("CC"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("x@x.com"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(addedUser.getId()))
+			.andDo(print());;
 	}
 	
 	@Test
-	public void testz_5_DeleteCust() throws Exception{
+	public void test_6_VerifyUser() throws Exception{
 		
 		
-
+		logger.info("TEST VALIDATING USER");
+		UserModel user = new UserModel();
+		user.setEmail("z@z.com");
+		user.setName("ZZ");
+		user.setPassword("QWSx@098");
+		
+		String requestJSON = toJson(user);
+		MvcResult result = mockMVC.perform(post("/user").content(requestJSON).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isCreated()).andReturn();
+		
+		User addedUser = toUser(result.getResponse().getContentAsString());	
+		
+		mockMVC.perform(get("/user/"+addedUser.getId()))	
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.password").value(addedUser.getPassword()));
+				
+	}
+	
+	@Test
+	public void test_7_DeleteUser() throws Exception{
+		
+		
+		logger.info("TEST DELETING USER");
 		UserModel user = new UserModel();
 		user.setEmail("d@d.com");
 		user.setName("DD");
