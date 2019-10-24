@@ -78,10 +78,11 @@ public class UserLoginController {
     }
     
     @ExceptionHandler(Exception.class)
-    public ServiceException handleException(Exception e) {
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleException(Exception e) {
     	logger.info(e.getMessage());
     	e.printStackTrace();
-    	throw new ServiceException("Service Exception");
+    	return "Service Error";
     }
     
 }
