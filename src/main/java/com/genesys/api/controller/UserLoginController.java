@@ -84,7 +84,7 @@ public class UserLoginController {
   
     
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception e) {
     	logger.info(e.getMessage());
     	e.printStackTrace();
