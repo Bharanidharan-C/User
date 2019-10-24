@@ -1,8 +1,10 @@
 Title: UserAPI
-Description: 
-It contains rest endpoint for Create, Update, Delete, List web service endpoints for a User object
+Description:
+It contains rest endpoint for Create, Update, Delete, List  for a User object
+
 User Object Contains:
 name, email address, password and the date of their last login
+
 Language and Framework used:
 Java, SpringBoot
 
@@ -14,9 +16,8 @@ Server Port:
 
 Assumption:
 -Email is unique for each user
--password is stored in encrypted manner using protegrity services, so that plain password texxt is not stored in DB
-Future Enhancements:
-Password can be encrypted and stored through code usring bcrypt algorithm
+-password column is protected by any services/tools, so that plain password text is not visible in DB for all users
+
 
 Sample Request Response:
 1. Test Get All Users
