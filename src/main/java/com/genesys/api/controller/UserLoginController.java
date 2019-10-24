@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.genesys.api.model.ServiceException;
 import com.genesys.api.model.User;
 import com.genesys.api.model.UserModel;
 import com.genesys.api.model.UserNotFoundException;
